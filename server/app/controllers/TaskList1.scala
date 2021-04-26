@@ -12,4 +12,8 @@ class TaskList1 @Inject()(val controllerComponents: ControllerComponents) extend
     Ok(views.html.taskList1(tasks))
   }
 
+  def product(productType: String, prodNum: Int) = Action {
+    Ok(s"Product type: $productType, product Number: $prodNum")
+  }
+
 }
