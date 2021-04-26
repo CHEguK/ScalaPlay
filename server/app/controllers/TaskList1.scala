@@ -12,8 +12,12 @@ class TaskList1 @Inject()(val controllerComponents: ControllerComponents) extend
     Ok(views.html.taskList1(tasks))
   }
 
-  def product(productType: String, prodNum: Int) = Action {
-    Ok(s"Product type: $productType, product Number: $prodNum")
+  def validateLogin(username: String, password: String) = Action {
+    Ok(s"Login: $username, Password: $password")
+  }
+
+  def login1 = Action {
+    Ok(views.html.login1())
   }
 
 }

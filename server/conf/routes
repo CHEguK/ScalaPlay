@@ -5,10 +5,9 @@
 
 # An example controller showing a sample home page
 GET     /                                               controllers.HomeController.index()
-GET     /productArgs                                    controllers.TaskList1.product(productType: String, prodNum: Int)
-GET     /product/:productType/:prodNum                  controllers.TaskList1.product(productType: String, prodNum: Int)
-GET     /productRE/$productType<[a-z]{2}\d\d>/:prodNum  controllers.TaskList1.product(productType: String, prodNum: Int)
 
+GET     /login1                                         controllers.TaskList1.login1
+GET     /validate                                       controllers.TaskList1.validateLogin(username: String, password: String)
 GET     /taskList1                                      controllers.TaskList1.taskList()
 
 # Map static resources from the /public folder to the /assets URL path
