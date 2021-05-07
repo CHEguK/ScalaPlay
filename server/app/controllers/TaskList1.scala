@@ -12,8 +12,17 @@ class TaskList1 @Inject()(val controllerComponents: ControllerComponents) extend
     Ok(views.html.taskList1(tasks))
   }
 
-  def validateLogin(username: String, password: String) = Action {
+  def validateLoginGet(username: String, password: String) = Action {
     Ok(s"Login: $username, Password: $password")
+  }
+
+  def validateLoginPost = Action { request =>
+    val postVals = request.body.asFormUrlEncoded
+    postVals.map { args =>
+      val username = args("username").head
+      val password = args("password").head
+      Redirect(routes.TaskList1.taskList())
+    }.getOrElse(Redirect(routes.TaskList1.login1))
   }
 
   def login1 = Action {
