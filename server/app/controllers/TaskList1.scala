@@ -46,7 +46,7 @@ class TaskList1 @Inject()(val controllerComponents: ControllerComponents) extend
     }.getOrElse(Redirect(routes.TaskList1.login))
   }
 
-  def login = Action {
+  def login = Action { implicit request =>
     Ok(views.html.login())
   }
 
