@@ -8,7 +8,7 @@ import javax.inject.{Inject, Singleton}
 @Singleton
 class TaskList1 @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
 
-  def taskList(): Action[AnyContent] = Action { request =>
+  def taskList(): Action[AnyContent] = Action { implicit request =>
     val usernameOpt = request.session.get("username")
     usernameOpt.map { username =>
       val tasks = TaskListInMemoryModel.getTasks(username)
@@ -28,7 +28,7 @@ class TaskList1 @Inject()(val controllerComponents: ControllerComponents) extend
       if (TaskListInMemoryModel.validate(username, password)) {
         Redirect(routes.TaskList1.taskList()).withSession("username" -> username)
       } else {
-        Redirect(routes.TaskList1.login)
+        Redirect(routes.TaskList1.login).flashing("error" -> "Invalid username/password combination")
       }
     }.getOrElse(Redirect(routes.TaskList1.login))
   }
@@ -41,7 +41,7 @@ class TaskList1 @Inject()(val controllerComponents: ControllerComponents) extend
       if (TaskListInMemoryModel.createUser(username, password)) {
         Redirect(routes.TaskList1.taskList()).withSession("username" -> username)
       } else {
-        Redirect(routes.TaskList1.login)
+        Redirect(routes.TaskList1.login).flashing("error" -> "User creation failed")
       }
     }.getOrElse(Redirect(routes.TaskList1.login))
   }
