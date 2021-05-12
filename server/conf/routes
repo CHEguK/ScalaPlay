@@ -7,10 +7,13 @@
 GET     /                                               controllers.HomeController.index()
 
 GET     /login                                          controllers.TaskList1.login
+GET     /logout                                         controllers.TaskList1.logout
 GET     /taskList1                                      controllers.TaskList1.taskList()
++ nocsrf
 POST    /createUser                                     controllers.TaskList1.createUser
 
 GET     /validateGet                                    controllers.TaskList1.validateLoginGet(username: String, password: String)
++ nocsrf
 POST    /validatePost                                   controllers.TaskList1.validateLoginPost
 
 # Map static resources from the /public folder to the /assets URL path
