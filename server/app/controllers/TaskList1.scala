@@ -46,6 +46,18 @@ class TaskList1 @Inject()(val controllerComponents: ControllerComponents) extend
     }.getOrElse(Redirect(routes.TaskList1.login))
   }
 
+  def addTask() = Action { implicit request =>
+    val postVals = request.body.asFormUrlEncoded
+    val usernameOpt = request.session.get("username")
+    usernameOpt.map { username =>
+      postVals.map { args =>
+        val task = args("newTask").head
+        TaskListInMemoryModel.addTask(username, task)
+        Redirect(routes.TaskList1.taskList())
+      }.getOrElse(Redirect(routes.TaskList1.taskList()))
+    }.getOrElse(Redirect(routes.TaskList1.taskList()))
+  }
+
   def login = Action { implicit request =>
     Ok(views.html.login())
   }

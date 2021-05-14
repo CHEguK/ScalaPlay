@@ -19,10 +19,12 @@ object TaskListInMemoryModel {
   }
 
   def getTasks(username: String): Seq[String] = {
-    tasks.get(username).getOrElse(Nil)
+    tasks.getOrElse(username, Nil)
   }
 
-  def addTask(username: String, task: String): Unit = ???
+  def addTask(username: String, task: String): Unit = {
+    tasks(username) = task :: tasks.getOrElse(username, Nil)
+  }
 
   def removeTask(username: String, index: Int): Boolean = ???
 
