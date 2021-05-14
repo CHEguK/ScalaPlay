@@ -14,6 +14,7 @@ POST    /createUser                                     controllers.TaskList1.cr
 GET     /validateGet                                    controllers.TaskList1.validateLoginGet(username: String, password: String)
 POST    /validatePost                                   controllers.TaskList1.validateLoginPost
 POST    /addTask                                        controllers.TaskList1.addTask()
+POST    /deleteTask                                     controllers.TaskList1.deleteTask()
 
 
 # Map static resources from the /public folder to the /assets URL path

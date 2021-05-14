@@ -58,6 +58,20 @@ class TaskList1 @Inject()(val controllerComponents: ControllerComponents) extend
     }.getOrElse(Redirect(routes.TaskList1.login))
   }
 
+  def deleteTask() = Action { implicit request =>
+    val postVals = request.body.asFormUrlEncoded
+    val usernameOpt = request.session.get("username")
+    usernameOpt.map { username =>
+      postVals.map { args =>
+        val index = args("index").head.toInt
+        TaskListInMemoryModel.removeTask(username, index)
+        Redirect(routes.TaskList1.taskList())
+      }.getOrElse(Redirect(routes.TaskList1.taskList()))
+    }.getOrElse(Redirect(routes.TaskList1.login))
+  }
+
+
+
   def login = Action { implicit request =>
     Ok(views.html.login())
   }
