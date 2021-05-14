@@ -55,7 +55,7 @@ class TaskList1 @Inject()(val controllerComponents: ControllerComponents) extend
         TaskListInMemoryModel.addTask(username, task)
         Redirect(routes.TaskList1.taskList())
       }.getOrElse(Redirect(routes.TaskList1.taskList()))
-    }.getOrElse(Redirect(routes.TaskList1.taskList()))
+    }.getOrElse(Redirect(routes.TaskList1.login))
   }
 
   def login = Action { implicit request =>
