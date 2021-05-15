@@ -1,12 +1,21 @@
 package controllers
 
 import models.TaskListInMemoryModel
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
+import play.api.mvc.{AbstractController, Action, AnyContent, BaseController, ControllerComponents, MessagesActionBuilder}
+import play.api.data._
+import play.api.data.Forms._
+
+case class LoginData(username: String, password: String)
 
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class TaskList1 @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
+class TaskList1 @Inject()(сс: ControllerComponents, messagesAction: MessagesActionBuilder) extends AbstractController(сс) with play.api.i18n.I18nSupport {
+
+  val loginForm = Form(mapping(
+    "Username" -> text(3, 10),
+    "password" -> text(8, 30)
+  )(LoginData.apply)(LoginData.unapply))
 
   def taskList(): Action[AnyContent] = Action { implicit request =>
     val usernameOpt = request.session.get("username")
@@ -31,6 +40,18 @@ class TaskList1 @Inject()(val controllerComponents: ControllerComponents) extend
         Redirect(routes.TaskList1.login).flashing("error" -> "Invalid username/password combination")
       }
     }.getOrElse(Redirect(routes.TaskList1.login))
+  }
+
+  def validateLoginForm = Action { implicit request =>
+    loginForm.bindFromRequest.fold(
+      formWithErrors => BadRequest(views.html.login(formWithErrors)),
+      ld =>
+        if (TaskListInMemoryModel.validate(ld.username, ld.password)) {
+          Redirect(routes.TaskList1.taskList()).withSession("username" -> ld.username)
+        } else {
+          Redirect(routes.TaskList1.login).flashing("error" -> "Invalid username/password combination")
+        }
+    )
   }
 
   def createUser = Action { request =>
@@ -58,7 +79,7 @@ class TaskList1 @Inject()(val controllerComponents: ControllerComponents) extend
     }.getOrElse(Redirect(routes.TaskList1.login))
   }
 
-  def deleteTask() = Action { implicit request =>
+  def deleteTask = Action { implicit request =>
     val postVals = request.body.asFormUrlEncoded
     val usernameOpt = request.session.get("username")
     usernameOpt.map { username =>
@@ -73,7 +94,7 @@ class TaskList1 @Inject()(val controllerComponents: ControllerComponents) extend
 
 
   def login = Action { implicit request =>
-    Ok(views.html.login())
+    Ok(views.html.login(loginForm))
   }
 
   def logout = Action {

@@ -13,6 +13,7 @@ POST    /createUser                                     controllers.TaskList1.cr
 
 GET     /validateGet                                    controllers.TaskList1.validateLoginGet(username: String, password: String)
 POST    /validatePost                                   controllers.TaskList1.validateLoginPost
+POST    /validateForm                                   controllers.TaskList1.validateLoginForm
 POST    /addTask                                        controllers.TaskList1.addTask()
 POST    /deleteTask                                     controllers.TaskList1.deleteTask()
 
