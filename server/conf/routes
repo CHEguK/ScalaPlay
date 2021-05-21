@@ -5,6 +5,8 @@
 
 # An example controller showing a sample home page
 GET     /                                               controllers.HomeController.index()
+GET     /random                                         controllers.HomeController.random
+GET     /randomString/:length                           controllers.HomeController.randomString(length: Int)
 
 GET     /login                                          controllers.TaskList1.login
 GET     /logout                                         controllers.TaskList1.logout

@@ -21,4 +21,12 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents) e
   def index(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.index())
   }
+
+  def random = Action {
+    Ok(util.Random.nextInt(1000).toString)
+  }
+
+  def randomString(length: Int) = Action {
+    Ok(util.Random.nextString(length))
+  }
 }
