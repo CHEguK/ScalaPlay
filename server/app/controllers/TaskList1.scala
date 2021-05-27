@@ -4,10 +4,10 @@ import models.TaskListInMemoryModel
 import play.api.mvc.{AbstractController, Action, AnyContent, BaseController, ControllerComponents, MessagesActionBuilder}
 import play.api.data._
 import play.api.data.Forms._
+import javax.inject.{Inject, Singleton}
+
 
 case class LoginData(username: String, password: String)
-
-import javax.inject.{Inject, Singleton}
 
 @Singleton
 class TaskList1 @Inject()(сс: ControllerComponents, messagesAction: MessagesActionBuilder) extends AbstractController(сс) with play.api.i18n.I18nSupport {
