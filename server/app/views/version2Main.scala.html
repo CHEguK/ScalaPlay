@@ -1,7 +1,11 @@
-@()(implicit flash: Flash)
+@()(implicit request: RequestHeader, flash: Flash)
 
 @main("Task List (version 2)") {
     <div id="contents"></div>
 
-    <script src="@routes.Assets.versioned("javascripts/version2.js")" type="text/javascript"></script>
+    <input type="hidden" id="csrfToken" value="@helper.CSRF.getToken.value">
+    <input type="hidden" id="loginRoute" value="@routes.TaskList2.login">
+    <input type="hidden" id="validateRoute" value="@routes.TaskList2.validate">
+
+    <script src="@routes.TaskList2.generatedJS" type="text/javascript"></script>
 }
