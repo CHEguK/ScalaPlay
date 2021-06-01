@@ -1,0 +1,41 @@
+@()(implicit request: RequestHeader, flash: Flash)
+
+@main("Task List (version 3)") {
+    <div id="contents">Version 3</div>
+
+    <div id="login-section">
+        <h2>Login:</h2>
+        Username: <input type="text" id="loginName">
+        <br>
+        Password: <input type="text" id="loginPass">
+        <br>
+        <button onclick="login()">Login</button>
+
+        <h2>Create User:</h2>
+        Username: <input type="text" id="createName">
+        <br>
+        Password: <input type="text" id="createPass">
+        <br>
+        <button onclick="createUser()">Create User</button>
+    </div>
+
+    <div id="task-section" hidden>
+        <h2>Task List</h2>
+
+        <ul id="task-list">
+        </ul>
+
+        <input type="text" id="newTask"/>
+        <button onclick="addTask()"></button>
+
+        <div>
+            <a href="@routes.TaskList2.logout">Logout</a>
+        </div>
+    </div>
+
+    <input type="hidden" id="csrfToken" value="@helper.CSRF.getToken.value">
+    <input type="hidden" id="loginRoute" value="@routes.TaskList2.login">
+    <input type="hidden" id="validateRoute" value="@routes.TaskList3.validate">
+
+    <script src="@routes.Assets.versioned("javascript/version3.js")" type="text/javascript"></script>
+}
